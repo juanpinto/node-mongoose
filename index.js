@@ -11,29 +11,26 @@ const databaseLocation = 'mongodb://localhost:27017/conFusion';
 const dbConnection = mongoose.connect(databaseLocation);
 
 
-dbConnection.then((db) =>{
+dbConnection.then((db) => {
     console.log("Connected correctly to MongoDB")
 
-    var newDish = new Dish({
+    Dish.create({
         name: 'Uthappiza',
         description: 'This is a test value'
     })
-
-    newDish.save()
-    .then((dish) => {
-        console.log(dish)
-
-        return Dish.find({}).exec();
-    })
-    .then((dishes) => {
-        console.log(dishes);
-        return Dish.deleteMany({});
-    })
-    .then(() => {
-        return mongoose.connection.close();
-    })
-    .catch((error) => {
-        console.log(error);
-    });
+        .then((dish) => {
+            console.log(dish)
+            return Dish.find({}).exec();
+        })
+        .then((dishes) => {
+            console.log(dishes);
+            return Dish.deleteMany({});
+        })
+        .then(() => {
+            return mongoose.connection.close();
+        })
+        .catch((error) => {
+            console.log(error);
+        });
 
 })
